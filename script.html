@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宇守信财税 · 口播脚本库</title>
+<style>
+  :root {
+    --primary: #1a7a5a;
+    --primary-light: #e8f5e9;
+    --sidebar-bg: #1a2a2a;
+    --sidebar-text: #c8d6d0;
+    --sidebar-width: 220px;
+    --bg: #f8faf9;
+    --card: #fff;
+    --text: #1a1a2e;
+    --text-light: #666;
+    --border: #e0e0e0;
+    --tag-hot: #e53935;
+    --tag-avoid: #fb8c00;
+    --tag-tip: #1565c0;
+    --tag-tool: #2e7d32;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ===== 左侧边栏 ===== */
+  .sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    padding: 24px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar .brand {
+    padding: 0 16px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 12px;
+  }
+  .sidebar .brand h2 {
+    font-size: 16px;
+    color: #fff;
+  }
+  .sidebar .brand p {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+  .sidebar .week-section {
+    margin-bottom: 4px;
+  }
+  .sidebar .week-label {
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar .week-label:hover { color: #fff; }
+  .sidebar .week-label .arrow {
+    font-size: 10px;
+    transition: transform .2s;
+  }
+  .sidebar .week-label .arrow.open { transform: rotate(90deg); }
+  .sidebar .day-list { display: none; }
+  .sidebar .day-list.open { display: block; }
+  .sidebar .day-item {
+    display: block;
+    padding: 5px 16px 5px 28px;
+    font-size: 13px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all .15s;
+  }
+  .sidebar .day-item:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+  }
+  .sidebar .day-item.active {
+    color: #fff;
+    border-left-color: var(--primary);
+    background: rgba(26,122,90,0.2);
+  }
+  .sidebar .day-item .tag-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  /* ===== 主内容区 ===== */
+  .main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    max-width: 820px;
+    padding: 28px 24px 80px;
+  }
+  .header {
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: 24px;
+  }
+  .header h1 { font-size: 22px; color: var(--primary); }
+  .header p { color: var(--text-light); font-size: 13px; margin-top: 4px; }
+  .header .current-info {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 6px;
+  }
+
+  .script-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    display: none;
+  }
+  .script-card.active { display: block; }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .card-header .day {
+    font-size: 13px;
+    color: var(--text-light);
+    background: var(--bg);
+    padding: 3px 12px;
+    border-radius: 10px;
+  }
+  .card-header .tag {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .tag-hot { background: #ffebee; color: var(--tag-hot); }
+  .tag-avoid { background: #fff3e0; color: var(--tag-avoid); }
+  .tag-tip { background: #e3f2fd; color: var(--tag-tip); }
+  .tag-tool { background: #e8f5e9; color: var(--tag-tool); }
+  .card-title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .card-title .num {
+    color: var(--text-light);
+    font-weight: 400;
+    font-size: 15px;
+    margin-right: 6px;
+  }
+  .card-meta {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 16px;
+  }
+  .script-content {
+    font-size: 15px;
+    white-space: pre-wrap;
+    line-height: 1.9;
+    color: #2c2c3a;
+    padding: 16px;
+    background: #fafcfa;
+    border-radius: 8px;
+    border: 1px solid #eef3ee;
+  }
+  .script-content .cue {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-top: 10px;
+  }
+  .script-content .cue:first-child { margin-top: 0; }
+  .script-content .action {
+    color: var(--tag-tool);
+    font-weight: 600;
+  }
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-light);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* 手机适配 */
+  @media (max-width: 700px) {
+    .sidebar { width: 180px; min-width: 180px; }
+    .main { margin-left: 180px; padding: 16px 12px 60px; }
+    .sidebar .brand h2 { font-size: 14px; }
+    .script-card { padding: 14px; }
+    .card-title { font-size: 16px; }
+    .script-content { font-size: 14px; padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 左侧导航 ===== -->
+<div class="sidebar" id="sidebar">
+  <div class="brand">
+    <h2>📹 宇守信财税</h2>
+    <p>口播脚本库</p>
+  </div>
+
+  <!-- 第1周 -->
+  <div class="week-section">
+    <div class="week-label" onclick="toggleWeek(this)">
+      第1周 6/1~6/7
+      <span class="arrow open">▶</span>
+    </div>
+    <div class="day-list open">
+      <a class="day-item" data-day="d1" onclick="showDay('d1')"><span class="tag-dot" style="background:var(--tag-tip)"></span>#01 人设·我是洪淳宇</a>
+      <a class="day-item" data-day="d2" onclick="showDay('d2')"><span class="tag-dot" style="background:var(--tag-avoid)"></span>#02 老板借钱避坑</a>
+      <a class="day-item" data-day="d3" onclick="showDay('d3')"><span class="tag-dot" style="background:var(--tag-tip)"></span>#03 税负率自查</a>
+      <a class="day-item" data-day="d4" onclick="showDay('d4')"><span class="tag-dot" style="background:var(--tag-hot)"></span>#04 发票44条红线</a>
+      <a class="day-item" data-day="d5" onclick="showDay('d5')"><span class="tag-dot" style="background:var(--tag-tool)"></span>#05 免费体检工具</a>
+      <a class="day-item" data-day="d6" onclick="showDay('d6')"><span class="tag-dot" style="background:var(--tag-avoid)"></span>#06 私户收款风险</a>
+      <a class="day-item" data-day="d7" onclick="showDay('d7')"><span class="tag-dot" style="background:var(--tag-tip)"></span>#07 小规模vs一般纳税人</a>
+    </div>
+  </div>
+
+  <!-- 第2周 -->
+  <div class="week-section">
+    <div class="week-label" onclick="toggleWeek(this)">
+      第2周 6/8~6/14
+      <span class="arrow">▶</span>
+    </div>
+    <div class="day-list" id="week2-list">
+      <div class="empty-state" style="padding:12px;font-size:12px;">✏️ 待更新</div>
+    </div>
+  </div>
+
+  <!-- 第3周 -->
+  <div class="week-section">
+    <div class="week-label" onclick="toggleWeek(this)">
+      第3周 6/15~6/21
+      <span class="arrow">▶</span>
+    </div>
+    <div class="day-list">
+      <div class="empty-state" style="padding:12px;font-size:12px;">✏️ 待更新</div>
+    </div>
+  </div>
+
+  <!-- 第4周 -->
+  <div class="week-section">
+    <div class="week-label" onclick="toggleWeek(this)">
+      第4周 6/22~6/28
+      <span class="arrow">▶</span>
+    </div>
+    <div class="day-list">
+      <div class="empty-state" style="padding:12px;font-size:12px;">✏️ 待更新</div>
+    </div>
+  </div>
+
+  <!-- 第5周 -->
+  <div class="week-section">
+    <div class="week-label" onclick="toggleWeek(this)">
+      第5周 6/29~6/30
+      <span class="arrow">▶</span>
+    </div>
+    <div class="day-list">
+      <div class="empty-state" style="padding:12px;font-size:12px;">✏️ 待更新</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 主内容区 ===== -->
+<div class="main">
+  <div class="header">
+    <h1>📹 宇守信财税 · 口播脚本库</h1>
+    <p>6月启动计划 · 持续更新中</p>
+    <div class="current-info" id="currentInfo">当前：第1周 6月1日~7日</div>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="script-card active" id="card-d1">
+    <div class="card-header">
+      <span class="day">6/1 周一</span>
+      <span class="tag tag-tip">📊 人设</span>
+    </div>
+    <div class="card-title"><span class="num">#01</span>我是洪淳宇，做财税18年了</div>
+    <div class="card-meta"><span>⏱ 约90秒</span><span>💬 引导词：体检</span></div>
+    <div class="script-content"><span class="cue">【开头 · 3秒】</span>
+做了18年财税，有些话今天我想说出来。
+
+<span class="cue">【中间】</span>
+我是洪淳宇，2008年入行。
+
+北京乾坤生会计师事务所合伙人，也是宇守信咨询的创始人。
+
+这18年，我见过太多企业因为财税问题栽跟头——
+
+有老板从公司借了80万买房，年底没还，税务局按分红征税，补了16万加滞纳金。
+
+有企业私户收款被金税四期预警，查了两年账，最后补税罚款加起来40多万。
+
+还有一个代账会计，帮客户乱开发票，自己被牵连进去，执业资格都没了。
+
+其实说实话，这些问题90%提前3个月发现，都能解决。
+
+所以我就想，与其等出事了再帮人擦屁股，不如用工具让大家自己就能发现问题。
+
+我做了21个财税工具，免费的、付费的都有。你输入几个数据，3分钟出报告，哪里有问题清清楚楚。
+
+这个账号，我会把18年积累的经验，用最简单的话讲给你听。
+
+<span class="cue">【结尾 · 引导】</span>
+想知道你的企业财税健不健康？
+
+评论区留<span class="action">「体检」</span>，我把免费工具发你，填完自动出报告。有问题私信我，免费帮你看。</div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="script-card" id="card-d2">
+    <div class="card-header">
+      <span class="day">6/2 周二</span>
+      <span class="tag tag-avoid">🚨 避坑</span>
+    </div>
+    <div class="card-title"><span class="num">#02</span>老板从公司借钱，税务局按分红算你信吗</div>
+    <div class="card-meta"><span>⏱ 约90秒</span><span>💬 引导词：借钱</span></div>
+    <div class="script-content"><span class="cue">【开头】</span>
+老板从自己公司借钱，年底不还，税务局直接算你分红，补税20%。
+
+<span class="cue">【中间】</span>
+很多老板觉得公司是我的钱就是我的，缺钱了从公司账户转一笔，反正以后还回去。
+
+错了。税法规定，老板从公司借钱，年底不还、也没有用于企业经营，视同分红，按20%缴个税。
+
+我见过一个客户，借了公司80万买房，第二年审计查出来，补税16万加滞纳金。
+
+那怎么办？两个办法：
+一、年底前还回去，第二年再借；
+二、如果确实要用，走工资、分红或者借款合同，该交税交税，别留下隐患。
+
+<span class="cue">【结尾】</span>
+你公司有没有这种情况？评论区聊聊，或者私信我帮你看看。</div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="script-card" id="card-d3">
+    <div class="card-header">
+      <span class="day">6/3 周三</span>
+      <span class="tag tag-tip">📊 实操</span>
+    </div>
+    <div class="card-title"><span class="num">#03</span>税负率多少算正常？教你3分钟自查</div>
+    <div class="card-meta"><span>⏱ 约70秒</span><span>💬 引导词：测算</span></div>
+    <div class="script-content"><span class="cue">【开头】</span>
+老板们最喜欢问的一个问题：我的税负率到底算不算正常？
+
+<span class="cue">【中间】</span>
+说实话，没有标准答案。行业不同、地区不同、企业规模不同，税负率都不一样。
+
+但有一个参考区间。比如制造业，增值税税负率一般在2%~5%之间。低了，税务局觉得你少交税；高了，你的利润受到影响。
+
+我做了一个免费的税负自查工具，你只要输入你的行业、地区和去年的收入，3分钟就能看到你的税负率在同行里处于什么位置。
+
+这个工具在评论区，自己去测。
+
+<span class="cue">【结尾】</span>
+测完了把结果截图发我，我帮你看有没有问题。</div>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="script-card" id="card-d4">
+    <div class="card-header">
+      <span class="day">6/4 周四</span>
+      <span class="tag tag-hot">🔥 热点</span>
+    </div>
+    <div class="card-title"><span class="num">#04</span>总局刚发布！发票44条红线，重点看这5条</div>
+    <div class="card-meta"><span>⏱ 约90秒</span><span>💬 引导词：清单</span></div>
+    <div class="script-content"><span class="cue">【开头】</span>
+总局刚发布了44条发票管理红线，踩到任何一条都可能被罚。
+
+<span class="cue">【中间】</span>
+我看了全文，挑5条最容易踩坑的跟你说：
+
+第一条，无实际业务的发票不要开。很多企业年底缺票，找人代开，这是虚开发票，严重了要坐牢。
+
+第二条，发票内容必须和实际业务一致。买了办公用品，别开成"咨询费"。
+
+第三条，大额发票留好佐证材料。合同、送货单、付款记录，一样不能少。
+
+第四条，异常发票及时处理。收到红字发票，30天内必须入账。
+
+第五条，电子发票重复报销风险。自己建个台账，别一张票报两次。
+
+这44条红线，我已经整理成一份自查清单，需要的私信我发你。
+
+<span class="cue">【结尾】</span>
+你踩了几条？评论区说说。</div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="script-card" id="card-d5">
+    <div class="card-header">
+      <span class="day">6/5 周五</span>
+      <span class="tag tag-tool">🛠️ 引流</span>
+    </div>
+    <div class="card-title"><span class="num">#05</span>3分钟，给你的企业做个财税体检</div>
+    <div class="card-meta"><span>⏱ 约70秒</span><span>💬 引导词：体检</span></div>
+    <div class="script-content"><span class="cue">【开头】</span>
+去医院要体检，你的企业也该做个体检。
+
+<span class="cue">【中间】</span>
+我做了一个免费的财税健康体检工具，你只要输入几个数据：你的营收、你的利润、你的纳税额、你的资产负债。
+
+3分钟，自动出12项指标分析，5维雷达图，一份完整的财税健康报告。
+
+哪些指标低了会被税务局注意，哪些指标高了说明经营有问题，一目了然。
+
+我自己事务所的客户，每年我都用这个工具帮他们做一次。发现问题，提前解决。
+
+<span class="cue">【结尾】</span>
+工具链接在评论区，测完截图发我，免费帮你看报告。</div>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="script-card" id="card-d6">
+    <div class="card-header">
+      <span class="day">6/6 周六</span>
+      <span class="tag tag-avoid">🚨 避坑</span>
+    </div>
+    <div class="card-title"><span class="num">#06</span>私户收款，金税四期怎么发现你的</div>
+    <div class="card-meta"><span>⏱ 约80秒</span><span>💬 引导词：私户</span></div>
+    <div class="script-content"><span class="cue">【开头】</span>
+用个人微信、支付宝收公司货款？金税四期一查一个准。
+
+<span class="cue">【中间】</span>
+很多小企业主觉得，客户不要发票，我就用个人账户收钱，税务局不知道。
+
+金税四期上线后，银行和税务局数据打通。你的个人账户如果一年进出超过一定额度（比如收款超过100万），系统自动预警。
+
+预警之后，税务局会查你的资金来源。解释不清楚的，按隐匿收入处理，补税+罚款+滞纳金，轻则补几十万，重则移交稽查。
+
+正确的做法：公司业务走对公账户，实在要收个人账户的，每一笔做好台账，该申报申报。
+
+<span class="cue">【结尾】</span>
+你有没有私户收款的情况？评论区说说，我给你建议。</div>
+  </div>
+
+  <!-- Day 7 -->
+  <div class="script-card" id="card-d7">
+    <div class="card-header">
+      <span class="day">6/7 周日</span>
+      <span class="tag tag-tip">📊 实操</span>
+    </div>
+    <div class="card-title"><span class="num">#07</span>小规模和一般纳税人，选错多交几十万</div>
+    <div class="card-meta"><span>⏱ 约80秒</span><span>💬 引导词：测算</span></div>
+    <div class="script-content"><span class="cue">【开头】</span>
+小规模纳税人和一般纳税人，选错了每年多交几十万税。
+
+<span class="cue">【中间】</span>
+很多新公司注册时随便选了一个，后面想改都麻烦。
+
+怎么选？记住三个原则：
+
+第一，看你的客户。如果你的客户主要是一般纳税人，他们要专票抵扣，那你选一般纳税人。
+
+第二，看你的供应商。如果你的供应商能开专票，你的进项多，选一般纳税人划算。
+
+第三，看你的利润率。毛利率高的行业，小规模纳税人（3%征收率）往往比一般纳税人（13%税率）划算。
+
+如果你不确定自己该选哪个，我有个税负测算工具，两种方案算一遍，哪个省钱一目了然。
+
+<span class="cue">【结尾】</span>
+评论区留<span class="action">「测算」</span>，我把工具发你，自己算一遍就清楚了。</div>
+  </div>
+
+  <div class="footer">
+    宇守信财税 · 口播脚本库 V1.0 &nbsp;|&nbsp; 更新于 2026年5月22日
+  </div>
+</div>
+
+<script>
+// ===== 切换周展开/收起 =====
+function toggleWeek(el) {
+  const list = el.nextElementSibling;
+  const arrow = el.querySelector('.arrow');
+  list.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// ===== 选中某一天 =====
+function showDay(dayId) {
+  // 隐藏所有卡片
+  document.querySelectorAll('.script-card').forEach(c => c.classList.remove('active'));
+  // 显示选中卡片
+  const card = document.getElementById('card-' + dayId);
+  if (card) card.classList.add('active');
+
+  // 更新侧边栏高亮
+  document.querySelectorAll('.day-item').forEach(item => item.classList.remove('active'));
+  const activeItem = document.querySelector('.day-item[data-day="' + dayId + '"]');
+  if (activeItem) activeItem.classList.add('active');
+
+  // 更新顶部信息
+  const info = document.getElementById('currentInfo');
+  const dayNames = {d1:'6/1 周一', d2:'6/2 周二', d3:'6/3 周三', d4:'6/4 周四', d5:'6/5 周五', d6:'6/6 周六', d7:'6/7 周日'};
+  if (dayNames[dayId]) info.textContent = '当前：第1周 · ' + dayNames[dayId];
+}
+
+// 默认选中 Day 1
+showDay('d1');
+</script>
+
+</body>
+</html>
