@@ -164,6 +164,19 @@ body{
 <script>
 
 const DATA = {
+  // 东亚
+  jp:{name:'日本',flag:'🇯🇵',score:3.0,
+    scores:{宏观:4.5,外资:2.5,税收:1.5,劳工:1.5,外汇:3.5,关系:2.5},
+    pros:['全球第三大经济体','技术领先','基建完善','法治健全'],
+    cons:['外商准入限制多','CIT税率高','劳动力严重短缺','日中关系波动','成本极高'],
+    tax:'CIT 23.2%·地方税叠加约30%·VAT 10%·DTA股息10%',
+    best:'研发中心·高端制造·半导体·医疗健康'},
+  kr:{name:'韩国',flag:'🇰🇷',score:2.8,
+    scores:{宏观:4.0,外资:2.5,税收:2.0,劳工:2.0,外汇:3.5,关系:2.0},
+    pros:['半导体·电池·汽车产业链强','基础设施发达','R&D环境好'],
+    cons:['劳动力成本高','劳动法严格','外资限制较多','日中韩关系复杂'],
+    tax:'CIT 9-24%·VAT 10%·R&D税收优惠·DTA股息10%',
+    best:'半导体·电池·R&D中心·生物科技'},
   id:{name:'印度尼西亚',flag:'🇮🇩',score:3.8,
     scores:{宏观:4.0,外资:4.0,税收:3.5,劳工:2.5,外汇:3.5,关系:5.0},
     pros:['政治关系最好','外资大幅开放','镍矿全球第一','2.81亿人口'],
@@ -236,9 +249,10 @@ let currentCode = null;
   const grid = document.getElementById("countryGrid");
   let html = "";
   const groups = [
-    {label:"\ud83c\udf0f 东南亚",codes:["id","vn","th","my","kh","la"]},
-    {label:"\ud83c\udf0d 中东/北非",codes:["ma","eg","pk"]},
-    {label:"\ud83c\udf0d 非洲",codes:["ke","za","tz"]}
+    {label:"🌏 东亚",codes:["jp","kr"]},
+    {label:"🌏 东南亚",codes:["id","vn","th","my","kh","la"]},
+    {label:"🌍 中东/北非",codes:["ma","eg","pk"]},
+    {label:"🌍 非洲",codes:["ke","za","tz"]}
   ];
   for (const g of groups) {
     html += "<div style=\"grid-column:1/-1;font-size:11px;color:#00695c;font-weight:600;padding:4px 0 0;\">"+g.label+"</div>";
