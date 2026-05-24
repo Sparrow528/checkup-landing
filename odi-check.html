@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>出海方案风险测评 · 宇守信财税</title>
+<title>出海方案风险测评 · 宇守信财税（钻石模型版）</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
@@ -12,11 +12,11 @@ body{
 }
 .header{
   background:linear-gradient(135deg,#00695c,#00897b);
-  color:#fff;padding:24px 16px 20px;text-align:center;
+  color:#fff;padding:24px 16px 16px;text-align:center;
 }
 .header h1{font-size:20px;font-weight:700;}
-.header p{font-size:13px;opacity:.85;margin-top:6px;}
-.header .brand{font-size:11px;opacity:.6;margin-top:8px;}
+.header p{font-size:12px;opacity:.85;margin-top:4px;}
+.header .badge{display:inline-block;font-size:10px;background:rgba(255,255,255,.15);padding:2px 8px;border-radius:4px;margin-top:6px;}
 .container{max-width:600px;margin:0 auto;padding:12px 12px 40px;}
 .steps{display:flex;gap:4px;margin-bottom:14px;}
 .steps .step{
@@ -63,9 +63,11 @@ body{
 .result-header .flag-big{font-size:48px;}
 .result-header .country-name{font-size:18px;font-weight:700;}
 .result-header .tag-line{font-size:12px;color:#666;margin-top:2px;}
+.result-header .model-badge{font-size:10px;color:#999;margin-top:2px;}
 .dim-bar{margin-bottom:8px;}
 .dim-bar .dim-header{display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px;}
 .dim-bar .dim-header .name{font-weight:500;}
+.dim-bar .dim-header .desc{font-size:10px;color:#999;font-weight:400;margin-left:2px;}
 .dim-bar .dim-header .val{color:#666;}
 .dim-bar .bar{height:6px;border-radius:3px;background:#e0e0e0;overflow:hidden;}
 .dim-bar .bar .fill{height:100%;border-radius:3px;transition:width .5s;}
@@ -88,17 +90,21 @@ body{
 .footer-bar .contact{color:#00695c;font-weight:600;text-decoration:none;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .fade-in{animation:fadeIn .4s ease;}
-@media(max-width:480px){
-  .country-grid{grid-template-columns:1fr 1fr;}
+.diamond-card{
+  background:linear-gradient(135deg,#e0f2f1,#f1f8e9);
+  border:1px solid #b2dfdb;
+  padding:10px 12px;border-radius:8px;font-size:11px;color:#00695c;margin-bottom:10px;
 }
+.diamond-card strong{color:#004d40;}
+@media(max-width:480px){.country-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>\ud83c\udf0d 出海方案风险测评</h1>
-  <p>选目标国家 · 填基本信息 · 自动出评分报告</p>
-  <div class="brand">宇守信财税 · 免费工具</div>
+  <p>钻石模型 · 6维竞争力评估</p>
+  <div class="badge">波特钻石模型框架 · 14国覆盖</div>
 </div>
 
 <div class="container">
@@ -111,7 +117,7 @@ body{
 
   <div class="panel active fade-in" id="panel1">
     <div class="card">
-      <div class="card-title">\ud83c\udf0f 选择目标投资国家</div>
+      <div class="card-title">选择目标投资国家</div>
       <div class="country-grid" id="countryGrid"></div>
     </div>
     <button class="btn btn-primary" id="btnStep2" onclick="goStep2()" disabled>已选：请选择一个国家 \u2192</button>
@@ -119,7 +125,7 @@ body{
 
   <div class="panel fade-in" id="panel2">
     <div class="card">
-      <div class="card-title">\ud83d\udcdd 补充基本信息</div>
+      <div class="card-title">\ud83d\udcdd 基本信息</div>
       <div class="form-row">
         <label>你的行业</label>
         <select id="industry">
@@ -140,127 +146,162 @@ body{
         </select>
       </div>
       <div class="form-row">
-        <label>你的企业名称（选填）</label>
+        <label>企业名称（选填）</label>
         <input type="text" id="company" placeholder="留空也可以">
       </div>
     </div>
-    <button class="btn btn-primary" id="btnStep3" onclick="goStep3()" disabled>下一步：查看测评报告 \u2192</button>
+    <button class="btn btn-primary" id="btnStep3" onclick="goStep3()" disabled>查看测评报告 \u2192</button>
     <button class="btn btn-outline" style="margin-top:6px;" onclick="backToStep1()">\u2190 重新选国家</button>
   </div>
 
   <div class="panel fade-in" id="panel3">
     <div id="reportContent"></div>
     <div style="margin-top:10px;display:flex;gap:6px;">
-      <button class="btn btn-outline" style="flex:1;" onclick="backToStep1()">重新测评</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="backToStep1()">\u2190 重新测评</button>
       <button class="btn btn-primary" style="flex:1;" onclick="shareResult()">\ud83d\udcf1 联系顾问解读</button>
     </div>
   </div>
 
   <div class="footer-bar">
-    编制：北京乾坤生会计师事务所 | 咨询：<a class="contact" href="javascript:void(0)" onclick="alert(\'微信号：hongchunyu042896\')">洪淳宇 18601294989</a>
+    编制：北京乾坤生会计师事务所 | 咨询：<a class="contact" href="javascript:void(0)" onclick="alert('微信号：hongchunyu042896')">洪淳宇 18601294989</a>
   </div>
 </div>
 
 <script>
 
 const DATA = {
-  // 东亚
-  jp:{name:'日本',flag:'🇯🇵',score:3.0,
-    scores:{宏观:4.5,外资:2.5,税收:1.5,劳工:1.5,外汇:3.5,关系:2.5},
-    pros:['全球第三大经济体','技术领先','基建完善','法治健全'],
-    cons:['外商准入限制多','CIT税率高','劳动力严重短缺','日中关系波动','成本极高'],
-    tax:'CIT 23.2%·地方税叠加约30%·VAT 10%·DTA股息10%',
-    best:'研发中心·高端制造·半导体·医疗健康'},
-  kr:{name:'韩国',flag:'🇰🇷',score:2.8,
-    scores:{宏观:4.0,外资:2.5,税收:2.0,劳工:2.0,外汇:3.5,关系:2.0},
-    pros:['半导体·电池·汽车产业链强','基础设施发达','R&D环境好'],
-    cons:['劳动力成本高','劳动法严格','外资限制较多','日中韩关系复杂'],
-    tax:'CIT 9-24%·VAT 10%·R&D税收优惠·DTA股息10%',
-    best:'半导体·电池·R&D中心·生物科技'},
-  id:{name:'印度尼西亚',flag:'🇮🇩',score:3.8,
-    scores:{宏观:4.0,外资:4.0,税收:3.5,劳工:2.5,外汇:3.5,关系:5.0},
-    pros:['政治关系最好','外资大幅开放','镍矿全球第一','2.81亿人口'],
-    cons:['THR宗教奖金雷区','工会活跃','外籍审批繁琐','印尼盾贬值'],
-    tax:'CIT 22% 免税期5-20年 VAT 11-12%',best:'镍矿下游·基建·数字经济·制造业'},
-  vn:{name:'越南',flag:'🇻🇳',score:3.4,
-    scores:{宏观:4.2,外资:2.9,税收:3.8,劳工:2.8,外汇:3.2,关系:3.8},
-    pros:['China+1最大受益者','中越贸易2300亿','FDI项目数第一','劳动力成本低'],
-    cons:['电力短缺','土地只能租50年','流程长','人工年涨10-15%'],
-    tax:'CIT 20% 4免9减半 VAT 8-10%',best:'电子组装·纺织·光伏·家具'},
-  th:{name:'泰国',flag:'🇹🇭',score:3.7,
-    scores:{宏观:3.5,外资:4.0,税收:4.0,劳工:2.5,外汇:4.5,关系:5.0},
-    pros:['BOI税收假期3-13年','EEC东部经济走廊','EV产业已建厂','旅游业强劲'],
-    cons:['政治周期性动荡','老龄化劳动力','工作许可繁琐','外资不能拥有土地'],
-    tax:'CIT 20% BOI假期3-13年 VAT 7%',best:'EV/汽车·电子·EEC项目'},
+  // ========== 🌏 东亚 ==========
+  jp:{name:'日本',flag:'🇯🇵',score:3.1,
+    scores:{生产:4.5,需求:4.5,集群:4.5,竞争:2.0,政府:1.5,关系:2.5},
+    pros:['全球顶尖的工业技术积累','半导体/汽车产业链高度成熟','高素质劳动力+发达基建','市场需求大且高品质'],
+    cons:['CIT实际税负约30%','外资准入壁垒多','劳动力严重短缺（老龄化）','日中关系波动风险'],
+    tax:'CIT 23.2%+地方约30%·VAT 10%·DTA 10%',
+    best:'半导体材料·精密制造·R&D中心·医疗健康·生物科技'},
+
+  kr:{name:'韩国',flag:'🇰🇷',score:2.9,
+    scores:{生产:4.0,需求:4.0,集群:4.5,竞争:2.0,政府:2.0,关系:2.0},
+    pros:['半导体/电池产业链全球领先','创新能力强','基础设施高度发达','R&D投资回报高'],
+    cons:['劳动力成本高且供给缺','劳动法严格','外资并购限制多','中韩关系受地缘影响'],
+    tax:'CIT 9-24%·VAT 10%·R&D税收优惠·DTA 10%',
+    best:'半导体·电池·R&D中心·生物科技·精密化工'},
+
+  // ========== 🌏 东南亚 ==========
+  id:{name:'印度尼西亚',flag:'🇮🇩',score:3.9,
+    scores:{生产:3.5,需求:4.5,集群:3.0,竞争:3.5,政府:4.0,关系:5.0},
+    pros:['2.81亿人口市场巨大','镍矿全球第一','Omnibus Law后外资大幅开放','中印尼关系最佳时期'],
+    cons:['工业配套不完善','宗教奖金制度复杂','工会活跃罢工权受保护','印尼盾长期贬值'],
+    tax:'CIT 22%·免税期5-20年·VAT 11-12%',
+    best:'镍矿下游·新能源电池·基建·数字经济·制造业迁移'},
+
+  vn:{name:'越南',flag:'🇻🇳',score:3.7,
+    scores:{生产:4.0,需求:3.0,集群:3.8,竞争:3.5,政府:3.8,关系:3.8},
+    pros:['China+1最大受益者','劳动力成本低且充足','电子组装集群正在形成','FDI吸引力亚洲前茅'],
+    cons:['电力短缺瓶颈','土地只能租50年','行政审批流程长','人工年涨10-15%'],
+    tax:'CIT 20%·4免9减半·VAT 8-10%',
+    best:'电子组装·纺织服装·光伏·家具·轻工制造'},
+
+  th:{name:'泰国',flag:'🇹🇭',score:3.6,
+    scores:{生产:3.0,需求:3.5,集群:4.0,竞争:3.0,政府:4.0,关系:5.0},
+    pros:['汽车产业集群成熟（泰国有东方底特律）','BOI税收假期3-13年','EEC东部经济走廊','中泰关系稳定'],
+    cons:['劳动力老龄化萎缩','外资不能拥有土地','政治周期性动荡','工作许可繁琐'],
+    tax:'CIT 20%·BOI假期3-13年·VAT 7%',
+    best:'EV/汽车·电子制造·EEC项目·食品加工'},
+
   my:{name:'马来西亚',flag:'🇲🇾',score:3.8,
-    scores:{宏观:3.9,外资:2.9,税收:4.0,劳工:3.5,外汇:4.3,关系:4.9},
-    pros:['半导体封测重镇','中马关系历史最好','双语人才','资本自由流动'],
-    cons:['Bumiputera土著政策','政治联盟存疑','林吉特温和贬值'],
-    tax:'CIT 24% 先锋5-10年豁免 SST 6-10%',best:'半导体·数据中心·EV·清真认证'},
-  kh:{name:'柬埔寨',flag:'🇰🇭',score:3.5,
-    scores:{宏观:4.0,外资:5.0,税收:4.5,劳工:3.5,外汇:5.0,关系:5.0},
-    pros:['中柬铁杆朋友','外资100%开放','美元化经济','最长9年免税'],
-    cons:['土地只能租99年','基础设施差','熟练技工短缺','FATF灰名单'],
-    tax:'CIT 20% QIP 6-9年免税 VAT 10%',best:'纺织制衣·建筑地产·农业加工'},
-  la:{name:'老挝',flag:'🇱🇦',score:3.5,
-    scores:{宏观:4.0,外资:3.5,税收:4.5,劳工:3.0,外汇:2.0,关系:5.0},
-    pros:['中老铁路已通车','SEZ税率5-8%','钾盐亚洲最大','工作签证容易'],
-    cons:['基普贬值80%','利润汇回受限','市场小','高通胀'],
-    tax:'CIT 20% SEZ 5-8% VAT 10%',best:'矿产·农业加工·铁路物流'},
+    scores:{生产:3.5,需求:3.0,集群:4.5,竞争:3.5,政府:3.5,关系:4.9},
+    pros:['半导体封测全球重镇','数据产业聚集','中英双语人才','资本自由流动'],
+    cons:['Bumiputera土著政策','政治联盟稳定性存疑','林吉特温和贬值','半导体受中美博弈影响'],
+    tax:'CIT 24%·先锋5-10年豁免·SST 6-10%',
+    best:'半导体封测·数据中心·EV零部件·清真产业'},
+
+  kh:{name:'柬埔寨',flag:'🇰🇭',score:3.4,
+    scores:{生产:2.5,需求:2.0,集群:2.5,竞争:4.0,政府:4.5,关系:5.0},
+    pros:['中柬铁杆朋友','外资100%开放','美元化经济无汇兑风险','QIP最长9年免税'],
+    cons:['熟练技工严重短缺','基础设施薄弱','工业配套几乎空白','FATF灰名单影响'],
+    tax:'CIT 20%·QIP 6-9年免税·VAT 10%',
+    best:'纺织制衣·建筑地产·农业加工'},
+
+  la:{name:'老挝',flag:'🇱🇦',score:3.2,
+    scores:{生产:2.5,需求:1.5,集群:2.0,竞争:3.5,政府:4.0,关系:5.0},
+    pros:['中老铁路已通车','SEZ税率5-8%','钾盐亚洲最大','工作签证最容易'],
+    cons:['基普贬值80%','利润汇回上限20-30%','市场仅760万人','高通胀20-25%'],
+    tax:'CIT 20%·SEZ 5-8%·VAT 10%',
+    best:'矿产·农业加工·铁路物流'},
+
+  // ========== 🌍 中东/北非 ==========
   ma:{name:'摩洛哥',flag:'🇲🇦',score:3.6,
-    scores:{宏观:4.0,外资:4.0,税收:4.0,劳工:3.0,外汇:3.0,关系:4.0},
-    pros:['与欧盟FTA免税入欧','Tanger Med非洲第一大港','磷矿70%储量','外国人可购土地'],
-    cons:['法语门槛高','官僚审批慢','外汇管制','社险费雇主21.5%'],
-    tax:'CIT 20% FTZ前5年0% VAT 20%',best:'汽车零部件·绿氢·LFP电池·纺织'},
-  eg:{name:'埃及',flag:'🇪🇬',score:3.2,
-    scores:{宏观:3.5,外资:3.5,税收:3.5,劳工:3.0,外汇:1.0,关系:5.0},
-    pros:['1.1亿人口','苏伊士经贸合作区','劳动力极低成本','对欧非出口便利'],
-    cons:['埃镑贬值超60%','利润汇回受限','工签2-6个月','官僚腐败'],
-    tax:'CIT 22.5% SCZone 5-10年免税 VAT 14%',best:'SCZone内制造业·能源·基建'},
-  ke:{name:'肯尼亚',flag:'🇰🇪',score:3.2,
-    scores:{宏观:3.5,外资:3.5,税收:3.0,劳工:2.5,外汇:2.0,关系:4.0},
-    pros:['东非最大经济体','蒙内铁路BRI','SEZ 10年免税','数字经济领先'],
-    cons:['先令贬值20%','外汇储备偏低','熟练工短缺','治安风险'],
-    tax:'CIT 30% SEZ 10年免税+10年10% VAT 16%',best:'基础设施·数字经济·农业加工'},
-  za:{name:'南非',flag:'🇿🇦',score:3.2,
-    scores:{宏观:3.0,外资:2.5,税收:3.0,劳工:2.0,外汇:4.0,关系:4.5},
-    pros:['BRICS成员','外汇自由汇回','SEZ 15% CIT','矿产丰富'],
-    cons:['B-BBEE合规成本高','劳动法极严','工会强大','犯罪率高'],
-    tax:'CIT 27% SEZ 15% VAT 15%',best:'采矿·汽车制造·可再生能源'},
-  pk:{name:'巴基斯坦',flag:'🇵🇰',score:3.1,
-    scores:{宏观:3.0,外资:2.5,税收:3.5,劳工:3.0,外汇:1.5,关系:5.0},
-    pros:['中巴全天候伙伴','CPEC深度绑定','劳动力极低成本','SEZ优惠'],
-    cons:['外汇储备仅够2个月','利润汇回极难','安全局势','电力成本高'],
-    tax:'CIT 29% SEZ免税 GST 18%',best:'基建·IT/BPO·纺织·农业'},
-  tz:{name:'坦桑尼亚',flag:'🇹🇿',score:3.9,
-    scores:{宏观:4.0,外资:4.3,税收:3.8,劳工:3.3,外汇:3.3,关系:4.5},
-    pros:['政治稳定·务实','外资100%允许','99年土地租约','SEZ前10年免税'],
-    cons:['标准税率30%偏高','熟练工短缺','利润汇回需审批','基础设施瓶颈'],
-    tax:'CIT 30% SEZ 10年免税+10年减半 VAT 18%',best:'农业·矿业·物流·旅游'}
+    scores:{生产:3.0,需求:3.0,集群:3.5,竞争:3.5,政府:3.5,关系:4.0},
+    pros:['对欧盟/美国FTA免税入欧','Tanger Med非洲第一大港','磷矿70%全球储量','外资可购非农土地'],
+    cons:['法语门槛高','官僚效率偏低','外汇管制','社险费雇主21.5%'],
+    tax:'CIT 20%·FTZ前5年0%·VAT 20%',
+    best:'汽车零部件·绿氢·LFP电池·纺织制造'},
+
+  eg:{name:'埃及',flag:'🇪🇬',score:3.0,
+    scores:{生产:3.0,需求:4.5,集群:2.5,竞争:2.5,政府:3.0,关系:5.0},
+    pros:['1.1亿人口大市场','苏伊士经贸合作区成熟','劳动力极低成本','对欧非出口便利'],
+    cons:['埃镑贬值超60%','利润汇回极受限','官僚腐败严重','安全局势不稳'],
+    tax:'CIT 22.5%·SCZone 5-10年免税·VAT 14%',
+    best:'SCZone内制造业·能源·基建'},
+
+  pk:{name:'巴基斯坦',flag:'🇵🇰',score:2.9,
+    scores:{生产:2.5,需求:3.5,集群:2.0,竞争:2.5,政府:3.0,关系:5.0},
+    pros:['中巴全天候伙伴','CPEC深度绑定','劳动力极低成本','SEZ有优惠'],
+    cons:['外汇储备仅够2个月','利润汇回极难','安全局势不佳','电力成本高'],
+    tax:'CIT 29%·SEZ免税·GST 18%',
+    best:'基建·IT/BPO·纺织·农业'},
+
+  // ========== 🌍 非洲 ==========
+  ke:{name:'肯尼亚',flag:'🇰🇪',score:3.1,
+    scores:{生产:2.5,需求:3.0,集群:2.5,竞争:3.0,政府:3.0,关系:4.0},
+    pros:['东非最大经济体','蒙内铁路BRI标杆','M-Pesa数字经济领先','SEZ 10年免税'],
+    cons:['先令贬值20%','熟练工短缺','治安风险偏高','外汇储备偏低'],
+    tax:'CIT 30%·SEZ 10年免税+10年10%·VAT 16%',
+    best:'基础设施·数字经济·农业加工·新能源'},
+
+  za:{name:'南非',flag:'🇿🇦',score:3.0,
+    scores:{生产:3.0,需求:3.5,集群:3.5,竞争:2.0,政府:2.5,关系:4.5},
+    pros:['BRICS成员·产业链最完整','外汇自由汇回','矿产丰富','SEZ 15% CIT优惠'],
+    cons:['B-BBEE合规成本极高','劳动法极严','工会势力强大','犯罪率高'],
+    tax:'CIT 27%·SEZ 15%·VAT 15%',
+    best:'采矿·汽车制造·可再生能源'},
+
+  tz:{name:'坦桑尼亚',flag:'🇹🇿',score:3.7,
+    scores:{生产:3.0,需求:2.5,集群:2.5,竞争:3.5,政府:3.8,关系:4.5},
+    pros:['政治最稳定·新政府务实','外资100%允许','99年土地租约','SEZ前10年免税'],
+    cons:['标准税率30%偏高','熟练技工短缺','利润汇回需审批','基础设施瓶颈'],
+    tax:'CIT 30%·SEZ 10年免税+10年减半·VAT 18%',
+    best:'农业·矿业·港口物流·旅游'}
 };
 
-const dimKeys = ["宏观","外资","税收","劳工","外汇","关系"];
-const dimNotes = {宏观:"政治·GDP·市场",外资:"开放度·审批",税收:"CIT·优惠·DTA",劳工:"成本·技能",外汇:"汇率·汇回",关系:"中X关系·BRI"};
+const dimKeys = ["生产","需求","集群","竞争","政府","关系"];
+const dimNotes = {
+  生产:"劳动力·资源·基础设施·资本",
+  需求:"国内市场体量·消费能力·增长潜力",
+  集群:"产业链配套·供应链成熟度·集聚效应",
+  竞争:"营商环境·竞争强度·法治·运营便利",
+  政府:"外资准入·税收优惠·审批效率·保护",
+  关系:"中X关系·BRI参与·地缘机遇"
+};
+const dimIcons = {生产:"\ud83c\udfed",需求:"\ud83d\udcc8",集群:"\ud83d\udd17",竞争:"\u2696\ufe0f",政府:"\ud83c\udfdb\ufe0f",关系:"\ud83e\udd1d"};
 
 let selectedCountry = null;
-let currentCode = null;
 
 (function initGrid() {
   const grid = document.getElementById("countryGrid");
   let html = "";
   const groups = [
-    {label:"🌏 东亚",codes:["jp","kr"]},
-    {label:"🌏 东南亚",codes:["id","vn","th","my","kh","la"]},
-    {label:"🌍 中东/北非",codes:["ma","eg","pk"]},
-    {label:"🌍 非洲",codes:["ke","za","tz"]}
+    {label:"\ud83c\udf0f 东亚",codes:["jp","kr"]},
+    {label:"\ud83c\udf0f 东南亚",codes:["id","vn","th","my","kh","la"]},
+    {label:"\ud83c\udf0d 中东/北非",codes:["ma","eg","pk"]},
+    {label:"\ud83c\udf0d 非洲",codes:["ke","za","tz"]}
   ];
   for (const g of groups) {
-    html += "<div style=\"grid-column:1/-1;font-size:11px;color:#00695c;font-weight:600;padding:4px 0 0;\">"+g.label+"</div>";
+    html += '<div style="grid-column:1/-1;font-size:11px;color:#00695c;font-weight:600;padding:4px 0 0;">'+g.label+'</div>';
     for (const code of g.codes) {
       const d = DATA[code];
-      html += "<div class=\"country-btn\" data-code=\""+code+"\" onclick=\"selectCountry(\'"+code+"\')\">"
-        + "<span class=\"flag\">"+d.flag+"</span>"+d.name
-        + "<span class=\"sc\">"+d.score.toFixed(1)+"/5.0</span></div>";
+      html += '<div class="country-btn" data-code="'+code+'" onclick="selectCountry(\''+code+'\')">'
+        + '<span class="flag">'+d.flag+'</span>'+d.name
+        + '<span class="sc">'+d.score.toFixed(1)+'/5.0</span></div>';
     }
   }
   grid.innerHTML = html;
@@ -268,9 +309,8 @@ let currentCode = null;
 
 function selectCountry(code) {
   document.querySelectorAll(".country-btn").forEach(b => b.classList.remove("selected"));
-  document.querySelector(".country-btn[data-code=\""+code+"\"]").classList.add("selected");
+  document.querySelector('.country-btn[data-code="'+code+'"]').classList.add("selected");
   selectedCountry = DATA[code];
-  currentCode = code;
   document.getElementById("btnStep2").textContent = "已选："+selectedCountry.flag+" "+selectedCountry.name+" \u2192";
   document.getElementById("btnStep2").disabled = false;
 }
@@ -317,18 +357,18 @@ function buildReport() {
 
   const total = d.score;
   let riskLevel, riskClass;
-  if (total >= 3.5) { riskLevel = "低风险"; riskClass = "low"; }
-  else if (total >= 3.0) { riskLevel = "中等风险"; riskClass = "medium"; }
-  else { riskLevel = "高风险"; riskClass = "high"; }
+  if (total >= 3.5) { riskLevel = "\ud83d\udfe2 低风险"; riskClass = "low"; }
+  else if (total >= 3.0) { riskLevel = "\ud83d\udfe0 中等风险"; riskClass = "medium"; }
+  else { riskLevel = "\ud83d\udd34 高风险"; riskClass = "high"; }
 
   function dimColor(v) { if (v >= 4) return "#2e7d32"; if (v >= 3) return "#ef6c00"; return "#c62828"; }
 
   let dimBars = "";
   for (const k of dimKeys) {
     const v = d.scores[k];
-    dimBars += "<div class=\"dim-bar\">"
-      + "<div class=\"dim-header\"><span class=\"name\">"+k+"</span><span class=\"val\">"+v.toFixed(1)+" <span style=\"font-size:10px;color:#999;\">"+dimNotes[k]+"</span></span></div>"
-      + "<div class=\"bar\"><div class=\"fill\" style=\"width:"+(v/5*100)+"%;background:"+dimColor(v)+";\"></div></div></div>";
+    dimBars += '<div class="dim-bar">'
+      + '<div class="dim-header"><span class="name">'+dimIcons[k]+' '+k+'</span><span class="desc">'+dimNotes[k]+'</span><span class="val">'+v.toFixed(1)+'</span></div>'
+      + '<div class="bar"><div class="fill" style="width:'+(v/5*100)+'%;background:'+dimColor(v)+';"></div></div></div>';
   }
 
   const recTag = total >= 3.5 ? "\u2705 推荐" : (total >= 3.0 ? "\u26a0\ufe0f 可考虑" : "\u274c 不推荐");
@@ -337,55 +377,59 @@ function buildReport() {
   const weakDims = dimKeys.filter(k => d.scores[k] < 3);
   if (weakDims.length > 0) {
     for (const k of weakDims) {
-      weakTips += "<li>"+k+"（"+d.scores[k].toFixed(1)+"分）偏低，需重点关注</li>";
+      weakTips += "<li>"+dimIcons[k]+" "+k+"（"+d.scores[k].toFixed(1)+"分）偏低，该维度可能影响投资可行性</li>";
     }
   } else {
-    weakTips = "<li>各维度评分均衡，风险可控</li>";
+    weakTips = "<li>各维度评分均衡，整体竞争力强</li>";
   }
 
   const amtLabel = amount >= 10000 ? (amount/10000)+"亿" : amount+"万";
 
-  const html = "<div class=\"card fade-in\">"
-    + "<div class=\"result-header\">"
-    + "<div class=\"flag-big\">"+d.flag+"</div>"
-    + "<div class=\"country-name\">"+d.name+"</div>"
-    + "<div class=\"tag-line\">"+industry+" \u00b7 "+amtLabel+"美元 \u00b7 "+recTag+"</div></div>"
-    + "<div class=\"risk-box "+riskClass+"\">"
-    + "<div class=\"risk-title\">"+riskLevel+"</div>"
-    + "<div class=\"risk-desc\">综合评分 "+d.score.toFixed(1)+"/5.0 \u2014 "
-    + (riskLevel==="低风险"?"适合作为出海目的地，建议尽快启动尽调"
-      : riskLevel==="中等风险"?"有潜力但需关注短板维度"
-      : "风险较高，建议重新评估目标国")+"</div></div>"
-    + "<div class=\"card-title\" style=\"font-size:13px;\">\ud83d\udcca 六维评分</div>"
-    + dimBars + "</div>"
+  const html = '<div class="diamond-card">'
+    + '<strong>\ud83d\udca� 波特钻石模型</strong> — 评估国家竞争力的经典框架，含4大核心要素+2大辅助要素'
+    + '</div>'
+    + '<div class="card fade-in">'
+    + '<div class="result-header">'
+    + '<div class="flag-big">'+d.flag+'</div>'
+    + '<div class="country-name">'+d.name+'</div>'
+    + '<div class="tag-line">'+industry+' \u00b7 '+amtLabel+'美元 \u00b7 '+recTag+'</div>'
+    + '<div class="model-badge">钻石模型综合竞争力评分</div></div>'
+    + '<div class="risk-box '+riskClass+'">'
+    + '<div class="risk-title">'+riskLevel+'</div>'
+    + '<div class="risk-desc">综合竞争力 '+d.score.toFixed(1)+'/5.0 \u2014 '
+    + (riskLevel.includes("低")?"该国家整体竞争力强，适合作为出海目的地"
+      : riskLevel.includes("中等")?"竞争力均衡，需关注短板维度并制定针对性方案"
+      : "整体竞争力偏弱，建议充分评估风险或考虑替代方案")+'</div></div>'
+    + '<div class="card-title" style="font-size:13px;">\ud83d\udcca 钻石模型六维评分</div>'
+    + dimBars + '</div>'
 
-    + "<div class=\"card fade-in\">"
-    + "<div class=\"card-title\" style=\"font-size:13px;\">\u2705 核心竞争力</div>"
-    + d.pros.map(p=>"<span class=\"info-tag\">"+p+"</span>").join("")+"</div>"
+    + '<div class="card fade-in">'
+    + '<div class="card-title" style="font-size:13px;">\u2705 核心优势</div>'
+    + d.pros.map(p=>'<span class="info-tag">'+p+'</span>').join('')+'</div>'
 
-    + "<div class=\"card fade-in\">"
-    + "<div class=\"card-title\" style=\"font-size:13px;\">\u26a0\ufe0f 主要风险</div>"
-    + "<ul class=\"suggest-list\">"+d.cons.map(c=>"<li>"+c+"</li>").join("")+"</ul></div>"
+    + '<div class="card fade-in">'
+    + '<div class="card-title" style="font-size:13px;">\u26a0\ufe0f 主要风险</div>'
+    + '<ul class="suggest-list">'+d.cons.map(c=>'<li>'+c+'</li>').join('')+'</ul></div>'
 
-    + "<div class=\"card fade-in\">"
-    + "<div class=\"card-title\" style=\"font-size:13px;\">\ud83d\udcb0 税收政策</div>"
-    + "<p style=\"font-size:12px;color:#555;\">"+d.tax+"</p>"
-    + "<p style=\"font-size:12px;color:#555;margin-top:6px;\"><strong>适合行业：</strong>"+d.best+"</p></div>"
+    + '<div class="card fade-in">'
+    + '<div class="card-title" style="font-size:13px;">\ud83d\udcb0 税收政策</div>'
+    + '<p style="font-size:12px;color:#555;">'+d.tax+'</p>'
+    + '<p style="font-size:12px;color:#555;margin-top:6px;"><strong>适合行业：</strong>'+d.best+'</p></div>'
 
-    + "<div class=\"card fade-in\">"
-    + "<div class=\"card-title\" style=\"font-size:13px;\">\ud83d\udccb 行动建议</div>"
-    + "<ul class=\"suggest-list\">"
-    + "<li>ODI备案需提前"+(amount>=1000?"4-6个月":"2-3个月")+"准备</li>"
-    + "<li>建议委托目标国律师进行法务尽调（我方可推荐）</li>"
+    + '<div class="card fade-in">'
+    + '<div class="card-title" style="font-size:13px;">\ud83d\udccb 行动建议</div>'
+    + '<ul class="suggest-list">'
+    + '<li>ODI备案需提前'+(amount>=1000?"4-6个月":"2-3个月")+'准备</li>'
+    + '<li>建议委托目标国律师进行法务尽调（我方可推荐律师资源）</li>'
     + weakTips
-    + "<li>建议提前规划转让定价架构和资金出境方案</li>"
-    + "</ul></div>";
+    + '<li>建议提前规划转让定价架构和资金出境方案</li>'
+    + '</ul></div>';
 
   document.getElementById("reportContent").innerHTML = html;
 }
 
 function shareResult() {
-  alert("微信号：hongchunyu042896\n\n截图发送测评结果，免费帮您解读报告");
+  alert("微信号：hongchunyu042896\n\n发送测评截图，免费帮您解读报告");
 }
 </script>
 
