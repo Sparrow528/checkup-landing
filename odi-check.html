@@ -299,12 +299,17 @@ let selectedCountry = null;
     html += '<div style="grid-column:1/-1;font-size:11px;color:#00695c;font-weight:600;padding:4px 0 0;">'+g.label+'</div>';
     for (const code of g.codes) {
       const d = DATA[code];
-      html += '<div class="country-btn" data-code="' + code + '" onclick="selectCountry(\'' + code + '\')">'
+      html += '<div class="country-btn" data-code="' + code + '">'
         + '<span class="flag">' + d.flag + '</span>' + d.name
         + '<span class="sc">' + d.score.toFixed(1) + '/5.0</span></div>';
     }
   }
   grid.innerHTML = html;
+  // 用事件委托监听国家选择
+  grid.addEventListener('click', function(e) {
+    var btn = e.target.closest('.country-btn');
+    if (btn) selectCountry(btn.dataset.code);
+  });
 })();
 
 function selectCountry(code) {
