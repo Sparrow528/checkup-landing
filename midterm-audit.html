@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>期中审计自测 — 你的企业该做体检了吗？</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC",-apple-system,sans-serif;background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);color:#1e293b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:24px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:40px 36px;max-width:520px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+h1{font-size:28px;font-weight:700;color:#1a56db;text-align:center;margin-bottom:8px}
+.sub{text-align:center;font-size:14px;color:#64748b;margin-bottom:32px}
+.q-block{margin-bottom:28px}
+.q-num{display:inline-block;background:#eff6ff;color:#1a56db;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;margin-bottom:10px}
+.q-text{font-size:16px;color:#334155;margin-bottom:12px;line-height:1.6}
+.options{display:flex;gap:8px;flex-wrap:wrap}
+.opt{flex:1;min-width:80px;padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;text-align:center;cursor:pointer;font-size:14px;color:#64748b;transition:all .15s;background:#fff;user-select:none}
+.opt:hover{border-color:#1a56db;color:#1a56db;background:#eff6ff}
+.opt.selected{background:#1a56db;color:#fff;border-color:#1a56db;font-weight:700}
+.result{display:none;margin-top:32px;padding:28px 24px;border-radius:16px;text-align:center}
+.result h2{font-size:22px;margin-bottom:8px}
+.result .score{font-size:56px;font-weight:900;line-height:1;margin:12px 0}
+.result .msg{font-size:15px;line-height:1.7;color:#475569}
+.result.red{background:#fef2f2;border:2px solid #fecaca}
+.result.red h2,.result.red .score{color:#dc2626}
+.result.yellow{background:#fffbeb;border:2px solid #fde68a}
+.result.yellow h2,.result.yellow .score{color:#d97706}
+.result.green{background:#f0fdf4;border:2px solid #bbf7d0}
+.result.green h2,.result.green .score{color:#16a34a}
+.btn-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;padding:12px 20px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;border:none}
+.btn-check{background:#1a56db;color:#fff}
+.btn-check:hover{background:#1e40af}
+.btn-check:disabled{background:#cbd5e1;color:#94a3b8;cursor:not-allowed}
+.btn-reset{background:#fff;border:1px solid #cbd5e1;color:#64748b}
+.btn-reset:hover{border-color:#1a56db;color:#1a56db}
+.btn-cta{background:#dc2626;color:#fff;display:none}
+.btn-cta:hover{background:#b91c1c}
+.contact{margin-top:32px;padding:28px 24px;border:1px solid #e2e8f0;border-radius:16px;text-align:center;background:#f8fafc}
+.contact h3{font-size:17px;color:#1e293b;margin-bottom:16px}
+.contact .qr{width:140px;height:140px;border-radius:12px;border:2px solid #1a56db;margin-bottom:8px}
+.contact .tel{font-size:18px;color:#1e293b;font-weight:700;letter-spacing:1px;margin-top:8px}
+.contact .note{font-size:12px;color:#94a3b8;margin-top:6px}
+.footer{text-align:center;margin-top:24px;font-size:12px;color:#94a3b8}
+.footer strong{color:#1a56db}
+.warn{font-size:12px;color:#dc2626;text-align:center;margin-top:8px;display:none}
+@media(max-width:500px){.card{padding:28px 20px}h1{font-size:22px}.result .score{font-size:44px}}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>⚡ 期中审计自测</h1>
+  <p class="sub">你的企业该做体检了吗？10道题快速诊断</p>
+
+  <div id="questions"></div>
+
+  <div class="btn-row">
+    <button class="btn btn-check" id="btnCheck" disabled onclick="check()">查看结果</button>
+    <button class="btn btn-reset" onclick="resetAll()">重来</button>
+  </div>
+
+  <div class="result" id="result"></div>
+  <div class="btn-row">
+    <button class="btn btn-cta" id="btnCta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📞 立即预约期中审计</button>
+  </div>
+  <p class="warn" id="warn">⚠ 请回答全部10题</p>
+
+  <div class="contact" id="contact">
+    <h3>扫码咨询期中审计</h3>
+    <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC3UlEQVR4nO2cW2rjMBSGvzMK9FGBLqBLsXc2zJJmB85SuoAB+bFg88+DJF+awkxJcVL76CHYjj4ikcO5/CeKiU+Py4/PM+CQQw455JBDDu0TsjJOcLET1gLWMpq1jAZ9ndDeZXkObQ81kqQENGk0ddkOngT9k6wlSJK0hrZbnkPbQ31xAGbnoGIMcUC/zqMBkD3IvZbn0GbQ6epJ/GMiDoj+jIgJ+5JPcujbQkHW9mbWRsl+pvHKIL7hnhz671F9RBTQlxtdXgQwnkT/LOhhqWQ9+J4cugVimTESRJM+eqkTGknqHnxPDt0CZR+xdADxzVS8xWhczpjWEx5+Tw7dAhUfUbxAKCUoBKmLA1JaPZP7iINAlxdJ0ptZGwcgDkB/wrJCBagDrL3P8hy6S9SwfNU/y+gNSuEZBms6YU06m7ZenkObQ6vMMko0GsoVwPWtR42dQ5TcIAFNqmJ1rjCyqQSVIBLlecQBoGIRXf7iNY0Bde/SSw3uIw4ALaLG6osfWOgRAMU23CL2Dk0+AtTFcpWbXEqhvkHI8cMtYv8Qc5jIo6k+IhtIjh81j/CosX/oKo/o8uNQqw6KFJGnuEXsHqqaZU4coKSXiVJ6zJGkSXgecQBoYRE5d+yAkkdkH7HsdLlF7B+a9IiweqkahbqoSY/wWuMI0FR9Fu2hJJAJqkLFVHV4HnEEaIoak6PQrE9WmWouUN1H7B5adsOXPYy51ghVysYt4lBQEPQn1DFa9ge/ziDpzYDRIA5Ye6/lObQVNClUZTD/tC6/O/W8pu6X+4gDQPOZrlqCjlbKjHyW5wRU5/FN9uTQ12SWq/7WsuOJ9zWOAa0yyzRlkVHrzBK8r3FcaDTp1Uxd/7TSKF79lN8RoA9O+SWs+Q0GAcsCdm9ocYznwffk0C3QtUKVpl/HzJ2uWGoNzyP2D12d6QJKn7ObZKpGpfHlFrF/yPTvOe+H/zOZQw455JBDDjkE8BfTmNifIwFMuAAAAABJRU5ErkJggg==" alt="扫码咨询">
+    <p class="tel">📱 18601294989</p>
+    <p class="note">守信财税 · 你的企业财务合伙人</p>
+  </div>
+
+  <div class="footer">
+    工具由 <strong>守信财税</strong> 提供
+  </div>
+</div>
+
+<script>
+const questions = [
+  "你上一次亲自看财务报表，是三个月以前？",
+  "你能随口说出公司当前银行余额吗？（误差不大于实际±10%）",
+  "你公司前五大客户的应收账款，有超过90天没收回的吗？",
+  "账面显示赚钱，但你觉得手上现金一直不够用？",
+  "今年到目前为止，你不知道该预缴多少企业所得税？",
+  "采购价格是否长期由一个人说了算，没有比价机制？",
+  "公司财务只有一个人，他/她说什么你信什么？",
+  "你有超过半年的库存积压，占用了大量资金？",
+  "发生过费用报销异常——金额突然变大，但你不知道原因？",
+  "你公司的税负率（实缴税÷营收）和同行比，你心里完全没数？"
+];
+
+let answers = new Array(10).fill(null);
+
+function render() {
+  const div = document.getElementById('questions');
+  div.innerHTML = questions.map((q, i) => `
+    <div class="q-block">
+      <span class="q-num">第${i+1}题</span>
+      <div class="q-text">${q}</div>
+      <div class="options">
+        <div class="opt${answers[i]===2?' selected':''}" onclick="pick(${i},2)">是 🙅</div>
+        <div class="opt${answers[i]===1?' selected':''}" onclick="pick(${i},1)">不确定 🤔</div>
+        <div class="opt${answers[i]===0?' selected':''}" onclick="pick(${i},0)">否 ✅</div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('btnCheck').disabled = answers.includes(null);
+}
+
+function pick(i, val) {
+  answers[i] = val;
+  render();
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('btnCta').style.display = 'none';
+  document.getElementById('warn').style.display = 'none';
+}
+
+function check() {
+  if (answers.includes(null)) {
+    document.getElementById('warn').style.display = 'block';
+    return;
+  }
+  document.getElementById('warn').style.display = 'none';
+  const score = answers.reduce((a,b)=>a+b,0);
+  const r = document.getElementById('result');
+  const btn = document.getElementById('btnCta');
+  r.style.display = 'block';
+
+  if (score >= 13) {
+    r.className = 'result red';
+    r.innerHTML = `<h2>🔴 红灯 — 高风险</h2>
+      <div class="score">${score}/20</div>
+      <div class="msg">你的企业财务存在<strong>严重隐患</strong>。应收失控、现金紧绷、税务盲区——任何一项爆发都可能造成不可逆损失。<br><br>别再等了。期中审计不是你该不该做的问题，是你<strong>现在就必须做</strong>。</div>`;
+    btn.style.display = 'block';
+  } else if (score >= 7) {
+    r.className = 'result yellow';
+    r.innerHTML = `<h2>🟡 黄灯 — 需要关注</h2>
+      <div class="score">${score}/20</div>
+      <div class="msg">你的企业有一定财务风险，虽不至于马上出事，但继续拖下去——<strong>小问题会变成大麻烦</strong>。<br><br>建议尽快安排期中审计，在问题扩大之前掐掉。</div>`;
+    btn.style.display = 'block';
+  } else {
+    r.className = 'result green';
+    r.innerHTML = `<h2>🟢 绿灯 — 状态良好</h2>
+      <div class="score">${score}/20</div>
+      <div class="msg">目前财务管控比较到位。但记住——<strong>企业规模在涨，问题也在涨</strong>。建议每半年做一次期中审计，保持健康状态。</div>`;
+    btn.style.display = 'none';
+  }
+}
+
+function resetAll() {
+  answers = new Array(10).fill(null);
+  render();
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('btnCta').style.display = 'none';
+  document.getElementById('warn').style.display = 'none';
+}
+
+render();
+</script>
+</body>
+</html>
