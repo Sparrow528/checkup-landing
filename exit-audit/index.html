@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>离任审计资料清单 — 民办非营利机构 · 守信会计师事务所</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", -apple-system, sans-serif;
+  background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 30%, #f8fafc 100%);
+  color: #334155;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+.wrap { max-width: 960px; margin: 0 auto; padding: 40px 20px 60px; }
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 50px 20px 36px;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  display: block;
+  width: 80px; height: 3px;
+  background: linear-gradient(90deg, transparent, #22c55e, transparent);
+  margin: 24px auto 0;
+}
+.hero h1 {
+  font-size: 30px; font-weight: 700;
+  color: #166534;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.hero .sub {
+  font-size: 14px; color: #65a30d;
+  font-weight: 500;
+}
+
+/* Quote */
+.quote-box {
+  background: #fff;
+  border-left: 4px solid #22c55e;
+  border-radius: 0 12px 12px 0;
+  padding: 24px 28px;
+  margin: 0 0 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.quote-box p { font-size: 15px; color: #475569; margin-bottom: 8px; }
+.quote-box p:last-child { margin-bottom: 0; }
+.quote-box strong { color: #166534; }
+
+/* Info card */
+.info-card {
+  background: #fff;
+  border: 1px solid #dcfce7;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.info-card h3 { color: #166534; font-size: 15px; margin-bottom: 16px; letter-spacing: 1px; }
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table td {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-bottom: 1px solid #f0fdf4;
+}
+.info-table td:first-child { color: #64748b; white-space: nowrap; width: 160px; font-weight: 600; }
+.info-table td:last-child { color: #334155; }
+.info-table tr:last-child td { border-bottom: none; }
+
+/* Section */
+.section { margin-bottom: 32px; }
+.section-card {
+  background: #fff;
+  border: 1px solid #dcfce7;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 20px 24px 16px;
+}
+.section-num {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 15px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(34,197,94,.25);
+}
+.section-title {
+  font-size: 18px; font-weight: 700;
+  color: #166534;
+  letter-spacing: .5px;
+}
+.section-why {
+  margin: 0 24px 14px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 13px;
+  color: #4d7c0f;
+  line-height: 1.7;
+}
+.section-why::before { content: '🔍 '; }
+
+/* Warning variant */
+.section-why.warn {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+/* Table */
+.tbl-wrap {
+  margin: 0 24px 20px;
+  overflow-x: auto;
+}
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px;
+}
+thead th {
+  background: #f0fdf4;
+  color: #166534;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 12px;
+  letter-spacing: .5px;
+  white-space: nowrap;
+  border-bottom: 2px solid #bbf7d0;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #f0fdf4; }
+tbody tr:hover { background: #f0fdf4; }
+td:nth-child(1) { color: #94a3b8; text-align: center; width: 40px; font-size: 13px; }
+td:nth-child(2) { color: #334155; font-weight: 500; }
+td:nth-child(3) { color: #64748b; font-size: 13px; }
+td:nth-child(4) { text-align: center; white-space: nowrap; }
+td:nth-child(5) { text-align: center; }
+
+/* Badges */
+.badge { display: inline-block; padding: 2px 10px; border-radius: 5px; font-size: 11px; font-weight: 600; letter-spacing: .3px; }
+.badge-legal { background: #dcfce7; color: #166534; }
+.badge-contract { background: #fef3c7; color: #92400e; }
+.badge-negotiate { background: #fee2e2; color: #dc2626; }
+.badge-key { color: #22c55e; font-size: 18px; }
+
+/* Tip */
+.tip {
+  margin: 4px 24px 18px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 13px;
+  color: #78716c;
+  line-height: 1.7;
+}
+.tip::before { content: '💡 '; }
+.tip strong { color: #92400e; }
+
+/* Highlight */
+.highlight-box {
+  background: #fff;
+  border: 1px solid #dcfce7;
+  border-radius: 14px;
+  padding: 28px;
+  margin: 32px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+.highlight-box h3 { color: #166534; font-size: 17px; margin-bottom: 20px; letter-spacing: 1px; }
+
+/* Focus grid */
+.focus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; list-style: none; }
+.focus-grid li {
+  background: #f0fdf4;
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-size: 14px;
+}
+.focus-grid li strong { color: #166534; display: block; margin-bottom: 4px; font-size: 15px; }
+.focus-grid li span { color: #64748b; font-size: 13px; line-height: 1.6; }
+
+/* Procedure list */
+.proc-list { list-style: none; }
+.proc-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0fdf4;
+  font-size: 14px; color: #475569;
+}
+.proc-list li:last-child { border-bottom: none; }
+.proc-list li::before { content: '▸ '; color: #22c55e; margin-right: 6px; }
+
+/* Legend */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  padding: 20px 0;
+  font-size: 13px; color: #64748b;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 32px 20px 16px;
+  color: #94a3b8;
+  font-size: 13px;
+  border-top: 1px solid #dcfce7;
+  margin-top: 36px;
+}
+.footer strong { color: #166534; }
+.footer .brand { margin-top: 8px; font-size: 14px; color: #22c55e; font-weight: 600; }
+
+/* Print */
+@media print {
+  body { background: #fff; color: #1e293b; }
+  .section-card, .info-card, .highlight-box { box-shadow: none; border-color: #e2e8f0; }
+  .section-header { padding-left: 0; padding-right: 0; }
+  .tbl-wrap { margin: 0 0 16px; }
+  .section-why { margin-left: 0; margin-right: 0; }
+  .tip { margin-left: 0; margin-right: 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ======== HERO ======== -->
+<div class="hero">
+  <h1>离任审计资料清单</h1>
+  <div class="sub">民办非营利机构专用 · 守信会计师事务所</div>
+</div>
+
+<!-- ======== QUOTE ======== -->
+<div class="quote-box">
+  <p>离任审计聚焦三件事：<strong>钱从哪来、用到哪去、是否符合公益目的。</strong></p>
+  <p>民办非营利机构适用《民间非营利组织会计制度》——资产属于机构，不存在"股东权益"。审计重点是资金使用是否合规、是否存在变相分配、资产是否安全完整。标注 ⭐ 的为关键资料，请优先提供。</p>
+</div>
+
+<!-- ======== 第〇类 ======== -->
+<div class="info-card">
+  <h3>📋 第〇类：被审计人基本信息（请先填写）</h3>
+  <table class="info-table">
+    <tr><td>被审计人姓名</td><td></td></tr>
+    <tr><td>职　务</td><td>（如：理事长 / 秘书长 / 院长 / 校长 / 总干事）</td></tr>
+    <tr><td>任职起止时间</td><td>　　年　　月　　日 — 　　年　　月　　日</td></tr>
+    <tr><td>分管领域 / 部门</td><td></td></tr>
+    <tr><td>机构类型</td><td>□ 民办学校　□ 民办医院　□ 民办养老机构　□ 社会组织（协会/基金会/民非）　□ 其他：</td></tr>
+    <tr><td>免税资格</td><td>□ 具备非营利组织免税资格（请提供认定文件）　□ 不具备　□ 申请中</td></tr>
+  </table>
+</div>
+
+<!-- ======== 一、任职基础 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">一</div>
+    <div class="section-title">任职基础与治理结构</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>确认被审计人的职务权限、任期范围及机构治理框架——民办非营利机构以理事会为核心治理，不存在"股东"，治理合规性是审计重点。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>任职文件</td><td>理事会任命决议、聘书、劳动合同、岗位职责说明</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>2</td><td>机构章程及修正案</td><td>经登记管理机关核准的最新章程（含理事会/监事会/管理层权责条款）</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>3</td><td>法人登记证书</td><td>民办非企业单位登记证书 / 社会团体法人登记证书 / 基金会法人登记证书</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>4</td><td>理事会/监事会成员名单</td><td>任职期间各届理事/监事名单、任职文件、理事会会议签到表</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>5</td><td>离任述职报告</td><td>离任人对任期工作的自我总结（如未离任：任期工作总结）</td><td><span class="badge badge-contract">合同约定</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>6</td><td>离任文件</td><td>辞职报告、理事会免职决议、调令</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>7</td><td>组织架构及部门职责</td><td>任职期间组织架构图及各部门职能说明</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tip">如无章程修正案（长期未更新）：以登记管理机关备案的最新版本为准，注明"章程未修订，以备案版为准"。</div>
+</div>
+</div>
+
+<!-- ======== 二、内控制度 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">二</div>
+    <div class="section-title">内控制度与合规文件</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>非营利机构的钱来自捐赠、会费、政府补助——每一分钱都有"限定用途"。制度是否健全、资金是否按指定用途使用，是离任审计区别于企业审计的核心。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>8</td><td>内部管理制度汇编</td><td>财务管理制度、采购制度、报销制度、捐赠管理制度、项目资金管理办法</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>9</td><td>授权审批权限表</td><td>理事会授权管理层审批的金额上限及事项范围</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>10</td><td>理事会会议纪要</td><td>任职期间全部理事会/常务理事会会议决议及签到表</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>11</td><td>免税资格认定文件</td><td>非营利组织免税资格认定通知书 / 公益性捐赠税前扣除资格文件</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>12</td><td>年度检查/年检报告</td><td>登记管理机关出具的年度检查结论</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>13</td><td>印章使用登记簿</td><td>公章、财务章、法人章使用记录</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 三、财务资料 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">三</div>
+    <div class="section-title">财务资料</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>非营利机构的财务核心是"限定性"与"非限定性"的区分——捐赠人指定的钱不能挪作他用。核查收入来源、支出去向、资金使用是否合规。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>14</td><td>任期各年度财务报表</td><td>资产负债表、业务活动表、现金流量表及报表附注——须按《民间非营利组织会计制度》编制</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>15</td><td>任期各月度/季度报表</td><td>内部管理用收支明细表</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>16</td><td>科目余额表（末级）</td><td>离任时点最近一期，到最细科目层级</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>17</td><td>总账、明细账</td><td>任职期间全部——可提供电子账套导出文件</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>18</td><td>捐赠收入台账</td><td>捐赠人、金额、限定用途、捐赠协议——区分限定性/非限定性捐赠</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>19</td><td>政府补助/购买服务文件</td><td>政府拨款批文、政府购买服务合同、补助资金使用报告</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>20</td><td>会费收入/服务收入明细</td><td>会员会费标准文件、提供服务收入的合同及收费标准</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>21</td><td>重大支出原始凭证</td><td>大额采购、项目支出、人员薪酬对应的发票/合同/审批单</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>22</td><td>银行对账单及余额调节表</td><td>任职期间所有银行账户月度对账单</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>23</td><td>纳税申报表</td><td>企业所得税（如有应税收入）、增值税、个税等申报表——注意非营利免税收入与应税收入的区分</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>24</td><td>税务稽查/检查结论</td><td>任职期间税务机关出具的全部文书</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 四、资产资料 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">四</div>
+    <div class="section-title">资产资料</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>非营利机构资产属于机构法人所有，不属于任何个人——离职时是否存在资产流失、公物私占是审计红线。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>25</td><td>资产盘点表</td><td>离任时点固定资产、存货、无形资产盘点表（需实地盘点）</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>26</td><td>固定资产台账</td><td>任职期间折旧计提、增减变动明细</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>27</td><td>应收账款/其他应收款明细</td><td>关注员工借款、关联方欠款、大额预付未核销</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>28</td><td>存货/物资清单</td><td>捐赠物资、项目物资的收发存台账</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>29</td><td>对外投资明细</td><td>股权/债权投资及收益情况——非营利机构对外投资须符合章程规定、不得影响公益目的</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>30</td><td>在建工程/工程物资</td><td>项目进度、已付工程款、转固时点</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 五、负债与净资产 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">五</div>
+    <div class="section-title">负债与净资产</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>非营利机构没有"所有者权益"——净资产分为"限定性"和"非限定性"，限定性净资产的用途受捐赠人/拨款方约束，不得随意改变用途。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>31</td><td>应付账款/其他应付款明细</td><td>含关联方往来</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>32</td><td>借款合同及还款台账</td><td>银行借款、其他借款——全部合同及利息支付记录</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>33</td><td>对外担保清单</td><td>非营利机构一般不得对外提供担保——如有，说明理由及审批程序</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>34</td><td>应付职工薪酬明细</td><td>工资、社保、公积金计提与实缴对比</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>35</td><td>限定性净资产台账</td><td>逐笔列明限定性资产的来源、限定用途、已使用金额、结余——是否与限定条件一致</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>36</td><td>预收账款/合同负债明细</td><td>已收款未履约的项目/服务合同</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 六、重大经济事项 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">六</div>
+    <div class="section-title">重大经济事项</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>非营利机构的重大决策不仅看程序合规，还要看是否符合公益目的——购买豪华办公楼、向关联方输送利益、偏离章程宗旨的投资，都是审计红线。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>37</td><td>重大投资决策文件</td><td>可行性报告、理事会决议、投资协议——是否符合章程规定的公益目的</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>38</td><td>重大资产处置审批</td><td>出售、转让、报废的审批单及合同——处置价格是否公允</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>39</td><td>重大合同台账</td><td>采购、服务购买、项目合作等≥一定金额的全部合同</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>40</td><td>关联交易清单</td><td>与理事/监事/管理层及其近亲属控制企业的全部交易——含定价依据，是否经理事会审批</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>41</td><td>诉讼/仲裁案件材料</td><td>机构作为原告或被告的全部案件（含已结案和进行中）</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>42</td><td>坏账核销/资产减值审批</td><td>应收账款核销、物资报废的决策文件</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 七、整改与既往审计 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">七</div>
+    <div class="section-title">整改与既往审计</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>上次审计查出的问题改没改——没改的，责任延续到本期。登记管理机关的检查结论同样纳入审计范围。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>43</td><td>上期审计报告</td><td>任职期间接受的全部外部/内部审计报告（含年度审计、专项审计）</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>44</td><td>审计/检查整改台账</td><td>对上期审计问题及登记管理机关检查问题的整改措施、完成时间</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>45</td><td>外部检查结论</td><td>税务稽查、财政检查、民政/教育/卫健等主管部门检查结论及整改证据</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 八、廉洁从业 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">八</div>
+    <div class="section-title">廉洁从业与职务行为</div>
+  </div>
+  <div class="section-why warn"><strong>⚠ 适用于机构负责人（理事长/秘书长/院长/校长等）。</strong>非营利机构的负责人同样受廉洁纪律约束——变相分配、公款私用、超标职务消费是民办非营利领域的高发问题。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>46</td><td>薪酬发放明细</td><td>被审计人及管理层任职期间全部薪酬（工资+津贴+奖金+补贴）——是否符合章程及理事会决议规定的标准</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>47</td><td>职务消费记录</td><td>差旅、接待、车辆使用等职务消费明细——是否超标、是否公私分明</td><td><span class="badge badge-legal">法定必须</span></td><td></td></tr>
+      <tr><td>48</td><td>利益冲突声明</td><td>被审计人与机构之间的关联交易、兼职、投资等情况声明</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 九、离任交接 ======== -->
+<div class="section">
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">九</div>
+    <div class="section-title">离任交接</div>
+  </div>
+  <div class="section-why"><strong>审计目的：</strong>有些问题是上任留下的，不是接任者的——这些资料帮我们区分责任。接任者不该替前任背锅。</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>#</th><th>资料名称</th><th>说明</th><th>依据</th><th>关键</th></tr></thead>
+    <tbody>
+      <tr><td>49</td><td>工作交接清单</td><td>未完事项、待办事务、重要联系人——交接双方签字确认</td><td><span class="badge badge-legal">法定必须</span></td><td><span class="badge-key">⭐</span></td></tr>
+      <tr><td>50</td><td>信息系统权限注销确认</td><td>OA、财务系统、网银等权限已注销的截图或确认函</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+      <tr><td>51</td><td>实物交还确认</td><td>电脑、文件、印章、钥匙等实物交回——接收人签字</td><td><span class="badge badge-contract">合同约定</span></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- ======== 图例 ======== -->
+<div class="legend">
+  <div class="legend-item"><span class="badge-key">⭐</span> 关键资料（请优先提供）</div>
+  <div class="legend-item"><span class="badge badge-legal">法定必须</span> 法律法规规定必须提供</div>
+  <div class="legend-item"><span class="badge badge-contract">合同约定</span> 业务约定书协商提供</div>
+  <div class="legend-item"><span class="badge badge-negotiate">协商提供</span> 涉及敏感信息，签保密协议后协商</div>
+</div>
+
+<!-- ======== Footer ======== -->
+<div class="footer">
+  <p>法规依据：《民办非企业单位登记管理暂行条例》 · 《民间非营利组织会计制度》 · 《非营利组织免税资格认定管理办法》 · 中办发〔2019〕45号</p>
+  <p class="brand">守信会计师事务所 · 经济责任审计 | 离任审计</p>
+</div>
+
+</div>
+</body>
+</html>
