@@ -199,14 +199,33 @@ td:nth-child(5) { text-align: center; }
 
 /* ═══════════ PRINT ═══════════ */
 @media print {
-  body { background: #fff; color: #1e293b; }
+  @page { margin: 12mm 10mm 10mm; size: A4; }
+  body { background: #fff; color: #1e293b; font-size: 13px; }
+  .wrap { padding: 0 8px 0; max-width: 100%; }
   .wrap::before { display: none; }
-  .card { box-shadow: none; border-color: var(--slate200); break-inside: avoid; }
+  .hero { padding: 16px 0 12px; }
+  .hero h1 { font-size: 24px; }
+  .hero .icon { width: 36px; height: 36px; font-size: 20px; line-height: 36px; margin-bottom: 10px; }
+  .hero .divider { margin-top: 10px; }
+  .card { box-shadow: none; border-color: var(--slate200); break-inside: avoid; margin-bottom: 12px; }
   .card:hover { box-shadow: none; }
-  .section-head { padding-left: 0; padding-right: 0; }
-  .tbl-wrap { margin-left: 0; margin-right: 0; }
-  .tip { margin-left: 0; margin-right: 0; }
-  .section-head .num { box-shadow: none; }
+  .card-body { padding: 14px 8px; }
+  .section { margin-bottom: 10px; }
+  .section-head { padding: 12px 8px 0; }
+  .section-head .num { width: 32px; height: 32px; font-size: 14px; border-radius: 8px; box-shadow: none; }
+  .section-head .title { font-size: 16px; }
+  .tbl-wrap { margin: 8px 0 8px; }
+  .tbl-wrap table { font-size: 12px; }
+  thead th { padding: 7px 8px; font-size: 10px; }
+  tbody td { padding: 6px 8px; }
+  .tip { margin: 4px 0 8px; padding: 8px 12px; font-size: 11px; }
+  .info-card h3 { font-size: 14px; margin-bottom: 10px; }
+  .info-table td { padding: 6px 8px; font-size: 12px; }
+  .badge { padding: 1px 8px; font-size: 10px; }
+  .badge-key { font-size: 14px; }
+  .legend { padding: 10px 0 6px; gap: 8px 14px; font-size: 11px; }
+  .footer { padding: 14px 0 0; margin-top: 12px; font-size: 11px; }
+  .footer .brand { font-size: 13px; margin-top: 4px; }
 }
 </style>
 </head>
